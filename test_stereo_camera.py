@@ -4,6 +4,7 @@ Test script for stereo camera on Jetson Orin Nano
 """
 import cv2
 
+
 def gstreamer_pipeline(
     sensor_id=0,
     capture_width=1920,
@@ -18,7 +19,8 @@ def gstreamer_pipeline(
     """
     return (
         f"nvarguscamerasrc sensor-id={sensor_id} ! "
-        f"video/x-raw(memory:NVMM), width=(int){capture_width}, height=(int){capture_height}, framerate=(fraction){framerate}/1 ! "
+        f"video/x-raw(memory:NVMM), width=(int){capture_width}, height=(int){capture_height}, "
+        f"framerate=(fraction){framerate}/1 ! "
         f"nvvidconv flip-method={flip_method} ! "
         f"video/x-raw, width=(int){display_width}, height=(int){display_height}, format=(string)BGRx ! "
         f"videoconvert ! "

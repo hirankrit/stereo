@@ -6,6 +6,7 @@ Left camera (sensor-id=0) on the left, Right camera (sensor-id=1) on the right
 import cv2
 import numpy as np
 
+
 def gstreamer_pipeline(
     sensor_id=0,
     capture_width=1920,
@@ -20,7 +21,8 @@ def gstreamer_pipeline(
     """
     return (
         f"nvarguscamerasrc sensor-id={sensor_id} ! "
-        f"video/x-raw(memory:NVMM), width=(int){capture_width}, height=(int){capture_height}, framerate=(fraction){framerate}/1 ! "
+        f"video/x-raw(memory:NVMM), width=(int){capture_width}, height=(int){capture_height}, "
+        f"framerate=(fraction){framerate}/1 ! "
         f"nvvidconv flip-method={flip_method} ! "
         f"video/x-raw, width=(int){display_width}, height=(int){display_height}, format=(string)BGRx ! "
         f"videoconvert ! "
@@ -71,9 +73,9 @@ def main():
 
             # Add labels
             cv2.putText(stereo_frame, 'Left Camera', (10, 30),
-                       cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.putText(stereo_frame, 'Right Camera', (frame_left.shape[1] + 10, 30),
-                       cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             # Display combined frame
             cv2.imshow(window_name, stereo_frame)
